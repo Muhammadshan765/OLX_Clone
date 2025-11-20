@@ -7,6 +7,7 @@ import arrow from "../../assets/arrow-down.svg";
 import searchWt from '../../assets/search.svg';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, logout } from '../Firebase/Firebase';
+import { Link } from 'react-router-dom';
 
 const Navbar = (props) => {
 
@@ -26,7 +27,9 @@ const Navbar = (props) => {
         <div>
 
             <nav className="fixed z-50 w-full overflow-auto p-2 pl-3 pr-3 shadow-md bg-slate-100 border-b-4 border-solid border-b-white">
-                <img src={logo} alt="" className='w-12' />
+                <Link to="/" className='flex-shrink-0'>
+                    <img src={logo} alt="OLX Home" className='w-12' />
+                </Link>
 
                 <div className='relative location-search ml-5'>
                     <img src={search} alt="" className='absolute top-4 left-2 w-5' />
@@ -51,18 +54,21 @@ const Navbar = (props) => {
                         Login
                     </p>
                 ) : (
-                    <div className='relative ml-5 cursor-pointer'>
-                        <p onClick={() => setDropdownOpen(!dropdownOpen)} style={{ color: '#002f34' }} className='font-bold'>
-                            {user.displayName?.split(' ')[0]}
-                        </p>
+                    <div className='flex items-center gap-4 ml-5'>
+                        <Link to="/my-ads" className='font-bold' style={{ color: '#002f34' }}>
+                            My Ads
+                        </Link>
+                        <div className='relative cursor-pointer'>
+                            <p onClick={() => setDropdownOpen(!dropdownOpen)} style={{ color: '#002f34' }} className='font-bold'>
+                                {user.displayName?.split(' ')[0]}
+                            </p>
 
-                        {dropdownOpen && (
-                            <div className='dropdown-menu'>
-                                <p onClick={handleLogout}>Logout</p>
-                            </div>
-                        )}
-
-
+                            {dropdownOpen && (
+                                <div className='dropdown-menu'>
+                                    <p onClick={handleLogout}>Logout</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 )}
 
